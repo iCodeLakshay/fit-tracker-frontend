@@ -35,15 +35,6 @@ export default function WorkoutModal({ open, onClose, onSave }: WorkoutModalProp
       toast.error('Please fill in all fields');
       return;
     }
-    console.log('Submitted workout:', {
-      userId: String(localStorage.getItem('userId')),
-      workoutName: exerciseName,
-      bodyPart,
-      sets: parseInt(sets),
-      reps: parseInt(reps),
-      weight: parseInt(weight)
-    });
-    
     setLoading(true);
     
     try {
@@ -56,7 +47,6 @@ export default function WorkoutModal({ open, onClose, onSave }: WorkoutModalProp
         reps: parseInt(reps),
         weight: parseInt(weight),
       };
-      console.log('Saving workout:', workout);
       
       await saveWorkout(workout);
       toast.success('Workout logged successfully!');

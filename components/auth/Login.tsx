@@ -43,10 +43,8 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
         
         // Store token, userId and redirect
         localStorage.setItem('token', data.token);
-        console.log("Token",data.token);
         
         localStorage.setItem('userId', data.user.id);
-        console.log("User ID",data.user.id);
         toast.success('Login successful!');
         router.push('/');
       } catch (err: any) {

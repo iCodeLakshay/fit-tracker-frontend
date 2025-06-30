@@ -18,9 +18,7 @@ export const saveWorkout = async(workout: Workout) =>{
             ...workout,
             weight: 0 // Default weight value since it's required by the backend
         };
-        console.log('Workout before calling API:', workoutWithWeight);
         const response = await axiosInstance.post("/workout", workoutWithWeight);
-        console.log('Workout after calling API:', response.data);
         return response.data;
 
     } catch (error) {
