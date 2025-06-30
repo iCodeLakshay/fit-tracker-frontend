@@ -175,31 +175,8 @@ const Signup: React.FC<SignupProps> = ({ onSwitchToLogin }) => {
           </button>
         </form>
 
-        {/* Divider */}
-        <div className="flex items-center my-4 sm:my-6">
-          <div className="flex-1 border-t border-gray-300"></div>
-          <span className="px-3 sm:px-4 text-gray-500 text-xs sm:text-sm">or continue with</span>
-          <div className="flex-1 border-t border-gray-300"></div>
-        </div>
-
-        {/* Social Login Buttons */}
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-3 mb-4 sm:mb-6">
-          <button
-            onClick={() => toast('Google signup coming soon!')}
-            className="flex-1 bg-white border-2 border-gray-200 text-gray-700 py-2.5 sm:py-3 px-4 rounded-lg font-medium text-xs sm:text-sm transition-all duration-300 hover:border-blue-500 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            Google
-          </button>
-          <button
-            onClick={() => toast('Facebook signup coming soon!')}
-            className="flex-1 bg-white border-2 border-gray-200 text-gray-700 py-2.5 sm:py-3 px-4 rounded-lg font-medium text-xs sm:text-sm transition-all duration-300 hover:border-blue-500 hover:text-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            Facebook
-          </button>
-        </div>
-
         {/* Switch Form */}
-        <div className="text-center text-gray-600 text-xs sm:text-sm">
+        <div className="text-center text-gray-600 text-xs sm:text-sm mt-2">
           Already have an account?{' '}
           <button
             onClick={onSwitchToLogin}

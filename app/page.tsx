@@ -15,13 +15,16 @@ import { getAllWorkouts, getUserProfile } from '@/server/common';
 
 export default function Home() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [weight, setWeight] = useState('');
+  const [bmi, setBMI] = useState(0);
+  const [username, setUsername] = useState<string | null>(null);
   const [bodyMeasurements, setBodyMeasurements] = useState<BodyMeasurement[]>([]);
   const [showWorkoutModal, setShowWorkoutModal] = useState(false);
   const [activeView, setActiveView] = useState<'dashboard' | 'workouts' | 'bmi' | 'reports'>('dashboard');
   
   // Protect this page from unauthenticated users
-  const { isAuthenticated, userId } = useAuthProtection();
-
+  const { userId } = useAuthProtection();
+  
   useEffect(() => {
     const loadData = async () => {
       if (!userId) return; // Don't load data if userId is not available
@@ -32,7 +35,20 @@ export default function Home() {
           getUserProfile(userId)
         ]);
         setWorkouts(workoutsData);
-        setBodyMeasurements(userProfileData.bodyMeasurements || []);
+        setWeight(userProfileData.weight || '');
+        setBMI(userProfileData.bmi || 0);
+        setUsername(userProfileData.username || null);
+        // Create a synthetic bodyMeasurement from the user profile data for the charts
+        if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
+          const syntheticMeasurement: BodyMeasurement = {
+            id: userProfileData._id || userId,
+            date: new Date().toISOString(),
+            height: userProfileData.height,
+            weight: userProfileData.weight,
+            bmi: userProfileData.bmi
+          };
+          setBodyMeasurements([syntheticMeasurement]);
+        }
       } catch (error) {
         console.error('Failed to load data:', error);
       }
@@ -50,7 +66,20 @@ export default function Home() {
         getUserProfile(userId)
       ]);
       setWorkouts(workoutsData);
-      setBodyMeasurements(userProfileData.bodyMeasurements || []);
+      setWeight(userProfileData.weight || '');
+      setBMI(userProfileData.bmi || 0);
+      
+      // Create a synthetic bodyMeasurement from the user profile data for the charts
+      if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
+        const syntheticMeasurement: BodyMeasurement = {
+          id: userProfileData._id || userId,
+          date: new Date().toISOString(),
+          height: userProfileData.height,
+          weight: userProfileData.weight,
+          bmi: userProfileData.bmi
+        };
+        setBodyMeasurements([syntheticMeasurement]);
+      }
     } catch (error) {
       console.error('Failed to refresh data:', error);
     }
@@ -63,8 +92,8 @@ export default function Home() {
   }).length;
 
   const totalWorkouts = workouts.length;
-  const currentWeight = bodyMeasurements.length > 0 ? bodyMeasurements[bodyMeasurements.length - 1].weight : 0;
-  const currentBMI = bodyMeasurements.length > 0 ? bodyMeasurements[bodyMeasurements.length - 1].bmi : 0;
+  const currentWeight = weight;
+  const currentBMI = bmi;
 
   const bodyPartCounts = workouts.reduce((acc, workout) => {
     acc[workout.bodyPart] = (acc[workout.bodyPart] || 0) + 1;
@@ -217,7 +246,7 @@ export default function Home() {
       <main className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900">
-            {activeView === 'dashboard' && 'Dashboard'}
+            {activeView === 'dashboard' && `Welcome,${username}`}
             {activeView === 'workouts' && 'Workouts'}
             {activeView === 'bmi' && 'BMI Calculator'}
             {activeView === 'reports' && 'Progress Reports'}

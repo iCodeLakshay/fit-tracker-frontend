@@ -1,4 +1,4 @@
-import { BodyMeasurement, Workout } from "@/types";
+import { Workout } from "@/types";
 import axiosInstance from "./axios";
 
 export const getAllWorkouts = async() => {

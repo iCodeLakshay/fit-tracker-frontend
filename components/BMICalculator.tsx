@@ -78,7 +78,6 @@ export default function BMICalculator({ onUpdate }: BMICalculatorProps) {
     }
 
     setLoading(true);
-    
     try {
       const userId = String(localStorage.getItem('userId'));
       if (!userId) {
@@ -105,6 +104,9 @@ export default function BMICalculator({ onUpdate }: BMICalculatorProps) {
       // Add the new measurement to the existing ones
       setBodyMeasurements(prev => [syntheticMeasurement, ...prev]);
       toast.success('Measurement saved successfully!');
+      setBmi(0);
+      setHeight('');
+      setWeight('');
       onUpdate();
     } catch (error) {
       console.error('Error saving measurement:', error);
