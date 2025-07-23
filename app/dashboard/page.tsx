@@ -10,7 +10,6 @@ import Navigation from '@/components/Navigation';
 import WorkoutModal from '@/components/WorkoutModal';
 import BMICalculator from '@/components/BMICalculator';
 import ProgressCharts from '@/components/ProgressCharts';
-import AITrainer from '@/components/AITrainer';
 import { Workout, BodyMeasurement } from '@/types';
 import { getAllWorkouts, getUserProfile } from '@/server/common';
 
@@ -21,7 +20,7 @@ export default function Home() {
   const [username, setUsername] = useState<string | null>(null);
   const [bodyMeasurements, setBodyMeasurements] = useState<BodyMeasurement[]>([]);
   const [showWorkoutModal, setShowWorkoutModal] = useState(false);
-  const [activeView, setActiveView] = useState<'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'workouts' | 'bmi' | 'reports'>('dashboard');
   
   // Protect this page from unauthenticated users
   const { userId } = useAuthProtection();
@@ -171,9 +170,6 @@ export default function Home() {
           <Button variant="outline" onClick={() => setActiveView('bmi')}>
             BMI Calculator
           </Button>
-          <Button variant="outline" onClick={() => setActiveView('trainer')}>
-            AI Trainer
-          </Button>
           <Button variant="outline" onClick={() => setActiveView('reports')}>
             View Reports
           </Button>
@@ -250,25 +246,22 @@ export default function Home() {
       <main className="container mx-auto px-4 py-6 max-w-7xl">
         <div className="mb-6">
           <h1 className="text-3xl font-bold text-gray-900">
-            {activeView === 'dashboard' && `Welcome, ${username || 'User'}`}
+            {activeView === 'dashboard' && `Welcome,${username}`}
             {activeView === 'workouts' && 'Workouts'}
             {activeView === 'bmi' && 'BMI Calculator'}
             {activeView === 'reports' && 'Progress Reports'}
-            {activeView === 'trainer' && 'AI Fitness Trainer'}
           </h1>
           <p className="text-gray-600 mt-1">
             {activeView === 'dashboard' && 'Track your fitness journey'}
             {activeView === 'workouts' && 'Log and manage your training sessions'}
             {activeView === 'bmi' && 'Calculate and track your BMI'}
             {activeView === 'reports' && 'Analyze your progress over time'}
-            {activeView === 'trainer' && 'Get personalized fitness advice and motivation'}
           </p>
         </div>
 
         {activeView === 'dashboard' && renderDashboard()}
         {activeView === 'bmi' && <BMICalculator onUpdate={refreshData} />}
         {activeView === 'reports' && <ProgressCharts workouts={workouts} bodyMeasurements={bodyMeasurements} />}
-        {activeView === 'trainer' && <AITrainer />}
       </main>
 
       <WorkoutModal 

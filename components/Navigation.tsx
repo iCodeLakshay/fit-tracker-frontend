@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import { Home, Dumbbell, Calculator, BarChart3, Menu, LogOut  } from 'lucide-react';
+import { Home, Dumbbell, Calculator, BarChart3, Menu, LogOut, BicepsFlexed  } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 interface NavigationProps {
-  activeView: 'dashboard' | 'workouts' | 'bmi' | 'reports';
-  setActiveView: (view: 'dashboard' | 'workouts' | 'bmi' | 'reports') => void;
+  activeView: 'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer';
+  setActiveView: (view: 'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer') => void;
 }
 
 export default function Navigation({ activeView, setActiveView }: NavigationProps) {
@@ -19,6 +19,7 @@ export default function Navigation({ activeView, setActiveView }: NavigationProp
     { id: 'dashboard', label: 'Dashboard', icon: Home },
     { id: 'bmi', label: 'BMI Calculator', icon: Calculator },
     { id: 'reports', label: 'Reports', icon: BarChart3 },
+    { id: 'trainer', label: 'AI Trainer', icon: BicepsFlexed },
     { id: 'logout', label: 'Logout', icon: LogOut },
   ] as const;
 
@@ -43,7 +44,7 @@ export default function Navigation({ activeView, setActiveView }: NavigationProp
               if (item.id === 'logout') {
                 handleLogout();
               } else {
-                setActiveView(item.id as 'dashboard' | 'workouts' | 'bmi' | 'reports');
+                setActiveView(item.id as 'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer');
               }
               if (mobile) setIsOpen(false);
             }}

@@ -81,3 +81,44 @@ export const bodyMeasurementApi = {
     }
   },
 };
+
+// --- AI Trainer API functions ---
+export const aiApi = {
+  // Fetch dynamic AI suggestions
+  getSuggestions: async (): Promise<string[]> => {
+    const token = localStorage.getItem('token');
+    const response = await fetch('/api/ai/suggestions', {
+      headers: {
+        'Authorization': token ? `Bearer ${token}` : '',
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Failed to fetch suggestions');
+    }
+    const data = await response.json();
+    return data.suggestions || [];
+  },
+
+  // Send a message to the AI trainer
+  sendMessage: async (
+    message: string,
+    conversationHistory: { sender: string; content: string }[]
+  ): Promise<string> => {
+    const token = localStorage.getItem('token');
+    const response = await fetch('/api/ai/chat', {
+      method: 'POST',
+      headers: {
+        'Authorization': token ? `Bearer ${token}` : '',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ message, conversationHistory }),
+    });
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.error || 'Failed to send message');
+    }
+    const data = await response.json();
+    return data.response || '';
+  },
+};
