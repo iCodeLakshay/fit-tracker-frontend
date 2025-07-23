@@ -20,7 +20,7 @@ export default function Home() {
   const [username, setUsername] = useState<string | null>(null);
   const [bodyMeasurements, setBodyMeasurements] = useState<BodyMeasurement[]>([]);
   const [showWorkoutModal, setShowWorkoutModal] = useState(false);
-  const [activeView, setActiveView] = useState<'dashboard' | 'workouts' | 'bmi' | 'reports'>('dashboard');
+  const [activeView, setActiveView] = useState<'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer'>('dashboard');
   
   // Protect this page from unauthenticated users
   const { userId } = useAuthProtection();
