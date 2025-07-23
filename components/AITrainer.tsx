@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import ReactMarkdown from 'react-markdown';
 
 interface Message {
   id: string;
@@ -123,7 +124,7 @@ export default function AITrainer() {
         <CardContent className="flex-1 flex flex-col p-0">
           {/* Messages Area */}
           <ScrollArea className="flex-1 p-4" ref={scrollAreaRef}>
-            <div className="space-y-4">
+            <div className="space-y-4 pb-4">
               {messages.map((message) => (
                 <div
                   key={message.id}
@@ -131,7 +132,7 @@ export default function AITrainer() {
                     message.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''
                   }`}
                 >
-                  <Avatar className="w-8 h-8">
+                  <Avatar className="w-8 h-8 flex-shrink-0">
                     <AvatarFallback className={message.sender === 'ai' ? 'bg-blue-600 text-white' : 'bg-gray-600 text-white'}>
                       {message.sender === 'ai' ? <Bot className="h-4 w-4" /> : <User className="h-4 w-4" />}
                     </AvatarFallback>
@@ -139,13 +140,15 @@ export default function AITrainer() {
                   
                   <div className={`flex-1 max-w-[80%] ${message.sender === 'user' ? 'text-right' : ''}`}>
                     <div
-                      className={`rounded-lg px-4 py-2 ${
+                      className={`rounded-lg px-4 py-3 ${
                         message.sender === 'user'
                           ? 'bg-blue-600 text-white'
                           : 'bg-gray-100 text-gray-900'
                       }`}
                     >
-                      <p className="text-sm">{message.content}</p>
+                      <div className="text-sm whitespace-pre-wrap break-words leading-relaxed">
+                        <ReactMarkdown>{message.content}</ReactMarkdown>
+                      </div>
                     </div>
                     <p className="text-xs text-gray-500 mt-1">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
@@ -220,7 +223,7 @@ export default function AITrainer() {
       </Card>
 
       {/* Tips Card */}
-      <Card className="hidden md:block">
+      {/* <Card className="hidden md:block max-h-56 overflow-y-auto">
         <CardHeader>
           <CardTitle className="text-lg text-blue-900">💡 Tips for Better Conversations</CardTitle>
         </CardHeader>
@@ -230,7 +233,7 @@ export default function AITrainer() {
           <p className="text-sm text-gray-600">• Share your progress for personalized advice</p>
           <p className="text-sm text-gray-600">• Ask for motivation when you need an extra push</p>
         </CardContent>
-      </Card>
+      </Card> */}
     </div>
   );
 }
