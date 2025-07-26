@@ -189,7 +189,7 @@ export default function Home() {
           </CardHeader>
           <CardContent>
             {recentWorkouts.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-3 max-h-80 overflow-y-auto">
                 {recentWorkouts.map((workout) => (
                   <div key={workout._id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
