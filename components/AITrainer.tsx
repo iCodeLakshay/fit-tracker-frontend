@@ -240,15 +240,16 @@ export default function AITrainer() {
 
           {/* Quick Questions (only show when conversation is new) */}
           {messages.length <= 2 && quickQuestions.length > 0 && (
-            <div className="px-4 py-2 border-t bg-gray-50">
+            <div className="px-4 py-2 border-t bg-gray-50 w-full max-w-full overflow-x-hidden">
               <p className="text-sm text-gray-600 mb-2">Quick questions:</p>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-col gap-2 w-full max-w-full">
                 {quickQuestions.map((question, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-xs"
+                    className="text-xs w-full text-left break-words whitespace-normal"
+                    style={{ wordBreak: 'break-word', overflowWrap: 'anywhere', maxWidth: '100%' }}
                     onClick={() => setInputMessage(question)}
                   >
                     {question}

@@ -39,6 +39,7 @@ export default function WorkoutModal({ open, onClose, onSave }: WorkoutModalProp
     
     try {
       const workout = {
+        _id: crypto.randomUUID(),
         userId: String(localStorage.getItem('userId')),
         date: new Date().toISOString(),
         workoutName: exerciseName.trim(),

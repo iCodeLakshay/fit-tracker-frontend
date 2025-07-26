@@ -18,6 +18,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/favicon" href="/logo/logo-black.svg" />
+      </head>
       <body className={inter.className}>
         {children}
         <Toaster position="top-right" />

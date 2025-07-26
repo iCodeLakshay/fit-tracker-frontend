@@ -191,7 +191,7 @@ export default function Home() {
             {recentWorkouts.length > 0 ? (
               <div className="space-y-3">
                 {recentWorkouts.map((workout) => (
-                  <div key={workout.userId} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <div key={workout._id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
                       <div className="font-medium">{workout.workoutName}</div>
                       <div className="text-sm text-gray-600">{workout.sets} sets × {workout.reps} reps</div>

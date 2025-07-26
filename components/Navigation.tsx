@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Home, Dumbbell, Calculator, BarChart3, Menu, LogOut, BicepsFlexed  } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 interface NavigationProps {
   activeView: 'dashboard' | 'workouts' | 'bmi' | 'reports' | 'trainer';
@@ -26,6 +27,7 @@ export default function Navigation({ activeView, setActiveView }: NavigationProp
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userId');
+    setIsOpen(false); // Close the sheet before navigating
     router.push('/auth');
   };
 
@@ -68,10 +70,14 @@ export default function Navigation({ activeView, setActiveView }: NavigationProp
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
-              <Dumbbell className="h-5 w-5 text-white" />
-            </div>
-            <h1 className="text-xl font-bold text-gray-900">FitTracker</h1>
+            <Image
+              src="/logo/logo-black.svg"
+              alt="FitTracker Logo"
+              width={70}
+              height={70}
+              className="rounded-lg"
+              priority
+            />
           </div>
 
           {/* Desktop Navigation */}
@@ -86,7 +92,10 @@ export default function Navigation({ activeView, setActiveView }: NavigationProp
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-72">
+            <SheetContent side="right" className="w-72" aria-hidden={false}>
+              <SheetHeader>
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              </SheetHeader>
               <div className="flex items-center space-x-3 mb-6">
                 <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg flex items-center justify-center">
                   <Dumbbell className="h-5 w-5 text-white" />
