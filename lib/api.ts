@@ -1,3 +1,4 @@
+import axiosInstance from '@/server/axios';
 import { Workout, BodyMeasurement } from '@/types';
 
 // Workout API functions
@@ -86,17 +87,7 @@ export const bodyMeasurementApi = {
 export const aiApi = {
   // Fetch dynamic AI suggestions
   getSuggestions: async (): Promise<string[]> => {
-    const token = localStorage.getItem('token');
-    const response = await fetch('/api/ai/suggestions', {
-      headers: {
-        'Authorization': token ? `Bearer ${token}` : '',
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to fetch suggestions');
-    }
-    const data = await response.json();
+    const { data } = await axiosInstance.get('/ai/suggestions');
     return data.suggestions || [];
   },
 
@@ -105,20 +96,7 @@ export const aiApi = {
     message: string,
     conversationHistory: { sender: string; content: string }[]
   ): Promise<string> => {
-    const token = localStorage.getItem('token');
-    const response = await fetch('/api/ai/chat', {
-      method: 'POST',
-      headers: {
-        'Authorization': token ? `Bearer ${token}` : '',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ message, conversationHistory }),
-    });
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.error || 'Failed to send message');
-    }
-    const data = await response.json();
+    const { data } = await axiosInstance.post('/ai/chat', { message, conversationHistory });
     return data.response || '';
   },
 };
