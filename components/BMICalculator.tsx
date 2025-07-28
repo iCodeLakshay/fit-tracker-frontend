@@ -30,7 +30,7 @@ export default function BMICalculator({ onUpdate }: BMICalculatorProps) {
         // Create a synthetic measurement from user data if it exists
         if (userData && userData.weight && userData.height && userData.bmi) {
           const syntheticMeasurement: BodyMeasurement = {
-            id: userData._id || id,
+            id: id,
             date: new Date().toISOString(), // Current date as we don't have a date in the User model
             height: userData.height,
             weight: userData.weight,

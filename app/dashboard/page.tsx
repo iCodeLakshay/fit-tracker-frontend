@@ -41,7 +41,7 @@ export default function Home() {
         // Create a synthetic bodyMeasurement from the user profile data for the charts
         if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
           const syntheticMeasurement: BodyMeasurement = {
-            id: userProfileData._id || userId,
+            id: userId,
             date: new Date().toISOString(),
             height: userProfileData.height,
             weight: userProfileData.weight,
@@ -72,7 +72,7 @@ export default function Home() {
       // Create a synthetic bodyMeasurement from the user profile data for the charts
       if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
         const syntheticMeasurement: BodyMeasurement = {
-          id: userProfileData._id || userId,
+          id: userId,
           date: new Date().toISOString(),
           height: userProfileData.height,
           weight: userProfileData.weight,

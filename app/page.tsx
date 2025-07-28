@@ -42,7 +42,7 @@ export default function Home() {
         // Create a synthetic bodyMeasurement from the user profile data for the charts
         if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
           const syntheticMeasurement: BodyMeasurement = {
-            id: userProfileData._id || userId,
+            id: userId,
             date: new Date().toISOString(),
             height: userProfileData.height,
             weight: userProfileData.weight,
@@ -73,7 +73,7 @@ export default function Home() {
       // Create a synthetic bodyMeasurement from the user profile data for the charts
       if (userProfileData && userProfileData.weight && userProfileData.height && userProfileData.bmi) {
         const syntheticMeasurement: BodyMeasurement = {
-          id: userProfileData._id || userId,
+          id: userId,
           date: new Date().toISOString(),
           height: userProfileData.height,
           weight: userProfileData.weight,
@@ -190,8 +190,8 @@ export default function Home() {
           <CardContent>
             {recentWorkouts.length > 0 ? (
               <div className="space-y-3 max-h-80 overflow-y-auto">
-                {recentWorkouts.map((workout) => (
-                  <div key={workout._id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                {recentWorkouts.map((workout, i) => (
+                  <div key={i} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                     <div>
                       <div className="font-medium">{workout.workoutName}</div>
                       <div className="text-sm text-gray-600">{workout.sets} sets × {workout.reps} reps</div>
