@@ -39,7 +39,6 @@ export default function WorkoutModal({ open, onClose, onSave }: WorkoutModalProp
     
     try {
       const workout = {
-        _id: crypto.randomUUID(),
         userId: String(localStorage.getItem('userId')),
         date: new Date().toISOString(),
         workoutName: exerciseName.trim(),
@@ -48,7 +47,8 @@ export default function WorkoutModal({ open, onClose, onSave }: WorkoutModalProp
         reps: parseInt(reps),
         weight: parseInt(weight),
       };
-      
+      console.log("Workout: ", workout);
+
       await saveWorkout(workout);
       toast.success('Workout logged successfully!');
       
