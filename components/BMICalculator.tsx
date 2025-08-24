@@ -116,7 +116,7 @@ export default function BMICalculator({ onUpdate }: BMICalculatorProps) {
     }
   };
 
-  const recentMeasurements = bodyMeasurements
+  const recentMeasurements = (bodyMeasurements || [])
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
 

@@ -46,7 +46,7 @@ export default function ProgressCharts({ workouts, bodyMeasurements }: ProgressC
   const { start: dateStart, label: dateLabel } = getDateRange();
 
   // Filter workouts by date range and body part
-  const filteredWorkouts = workouts.filter(workout => {
+  const filteredWorkouts = (workouts || []).filter(workout => {
     const workoutDate = new Date(workout.date);
     const isInRange = workoutDate >= dateStart;
     const isBodyPartMatch = selectedBodyPart === 'all' || workout.bodyPart === selectedBodyPart;
@@ -54,7 +54,7 @@ export default function ProgressCharts({ workouts, bodyMeasurements }: ProgressC
   });
 
   // Get unique body parts
-  const bodyParts = Array.from(new Set(workouts.map(w => w.bodyPart)));
+  const bodyParts = Array.from(new Set((workouts || []).map(w => w.bodyPart)));
 
   // Workout frequency data
   const workoutFrequencyData = () => {

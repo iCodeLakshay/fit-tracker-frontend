@@ -14,9 +14,6 @@ interface LoginFormData {
 interface LoginProps {
   onSwitchToSignup: () => void;
 }
-useEffect(() => {
-  activateBackend();
-}, [])
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
@@ -25,6 +22,10 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
+useEffect(() => {
+  activateBackend();
+}, [])
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -47,7 +48,6 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
 
         // Store token, userId and redirect
         localStorage.setItem('token', data.token);
-
         localStorage.setItem('userId', data.user.id);
         toast.success('Login successful!');
         router.push('/');
@@ -57,6 +57,8 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
       } finally {
         setLoading(false);
       }
+    } else {
+      toast.error('Please fill in all fields');
     }
   };
 

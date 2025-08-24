@@ -85,18 +85,18 @@ export default function Home() {
       console.error('Failed to refresh data:', error);
     }
   };
-
-  const thisWeekWorkouts = workouts.filter(w => {
+  
+  const thisWeekWorkouts = (workouts || []).filter(w => {
     const weekAgo = new Date();
     weekAgo.setDate(weekAgo.getDate() - 7);
     return new Date(w.date) > weekAgo;
   }).length;
 
-  const totalWorkouts = workouts.length;
+  const totalWorkouts = (workouts || []).length;
   const currentWeight = weight;
   const currentBMI = bmi;
 
-  const bodyPartCounts = workouts.reduce((acc, workout) => {
+  const bodyPartCounts = (workouts || []).reduce((acc, workout) => {
     acc[workout.bodyPart] = (acc[workout.bodyPart] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -105,7 +105,7 @@ export default function Home() {
     .sort(([,a], [,b]) => b - a)
     .slice(0, 5);
 
-  const recentWorkouts = workouts
+  const recentWorkouts = (workouts || [])
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, 5);
 

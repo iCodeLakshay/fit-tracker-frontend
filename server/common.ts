@@ -73,6 +73,7 @@ export const getUserProfile = async(userId: string) => {
 export const loginUser = async(credentials: { email: string, password: string }) => {
     try {
         const response = await axiosInstance.post("/auth/login", credentials);
+        console.log("Login response:", response.data);
         return response.data;
     } catch (error) {
         console.error("Login failed:", error);
