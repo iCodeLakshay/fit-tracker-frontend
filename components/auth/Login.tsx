@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useRouter } from 'next/navigation';
 import { Eye, EyeOff } from 'lucide-react';
-import { loginUser } from '@/server/common';
+import { activateBackend, loginUser } from '@/server/common';
 
 interface LoginFormData {
   email: string;
@@ -14,7 +14,9 @@ interface LoginFormData {
 interface LoginProps {
   onSwitchToSignup: () => void;
 }
-
+useEffect(() => {
+  activateBackend();
+}, [])
 const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
   const [formData, setFormData] = useState<LoginFormData>({
     email: '',
@@ -34,7 +36,7 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     if (formData.email && formData.password) {
       setLoading(true);
       try {
@@ -42,10 +44,10 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
           email: formData.email,
           password: formData.password
         });
-        
+
         // Store token, userId and redirect
         localStorage.setItem('token', data.token);
-        
+
         localStorage.setItem('userId', data.user.id);
         toast.success('Login successful!');
         router.push('/');
@@ -79,8 +81,8 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
         <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5">
           {/* Email Field */}
           <div>
-            <label 
-              htmlFor="email" 
+            <label
+              htmlFor="email"
               className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2"
             >
               Email Address
@@ -99,8 +101,8 @@ const Login: React.FC<LoginProps> = ({ onSwitchToSignup }) => {
 
           {/* Password Field */}
           <div>
-            <label 
-              htmlFor="password" 
+            <label
+              htmlFor="password"
               className="block text-xs sm:text-sm font-medium text-gray-700 mb-1 sm:mb-2"
             >
               Password

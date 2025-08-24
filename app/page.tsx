@@ -12,7 +12,7 @@ import BMICalculator from '@/components/BMICalculator';
 import ProgressCharts from '@/components/ProgressCharts';
 import AITrainer from '@/components/AITrainer';
 import { Workout, BodyMeasurement } from '@/types';
-import { activateBackend, getAllWorkouts, getUserProfile } from '@/server/common';
+import { getAllWorkouts, getUserProfile } from '@/server/common';
 
 export default function Home() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
@@ -25,10 +25,6 @@ export default function Home() {
   
   // Protect this page from unauthenticated users
   const { userId } = useAuthProtection();
-
-  useEffect( () => {
-     activateBackend();
-  }, [])
 
   useEffect(() => {
     const loadData = async () => {
