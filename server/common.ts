@@ -96,3 +96,13 @@ export const registerUser = async(userData: {
         throw error;
     }
 }
+
+export const activateBackend = async () => {
+    try {
+        const response = await axiosInstance.get("/");
+        return response.data;
+    } catch (error) {
+        console.error("Activation failed:", error);
+        throw error;
+    }
+}
